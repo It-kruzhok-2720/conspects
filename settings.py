@@ -1,2 +1,0 @@
-api_key = "vk1.a.CUz_LSMVkFb7MSgAfYfh1skRRFZqOadLj6YW6hIuYYFBs3hKKeM7dKorZdNLpizrZ2YL6OAQsOU6BsD3ZDVxPV8Jy1rxoImqit7ERQSev-x1Tdm9AOa539MnGXq-dqmjdWFsMsIJOWKrRTo89ZPdU8XJ0EMb4szu0UhcWfuUGej7mkea4FDIcchtkr7I7Nvl"
-admin_id = ""
