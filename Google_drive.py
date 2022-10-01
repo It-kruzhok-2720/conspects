@@ -41,3 +41,6 @@ class Google_drive:
             #"patents" : []
         }
         self.service.files().create(body=folder_metadata).execute()
+    
+    def get_files(self):
+        pass
