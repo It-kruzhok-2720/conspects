@@ -2,5 +2,5 @@ from Google_drive import Google_drive
 
 gd = Google_drive()
 
-gd.make_new_folder("huy")
-#кто такая Катя?
+gd.empty_trash()
+gd.create_new_folder("test")

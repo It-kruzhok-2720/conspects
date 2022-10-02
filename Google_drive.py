@@ -7,11 +7,10 @@ from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 from google.auth.transport.requests import Request
 
 class Google_drive:
-
     def __init__(self):
         self._root_folder = "Conspects"
         self.service = None
-
+        self.mime_types = {"folder" : "application/vnd.google-apps.folder", "photo" : "application/vnd.google-apps.photo"}
         cred = None
 
         pickle_file = f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
@@ -34,13 +33,32 @@ class Google_drive:
         self.service = build(API_SERVICE_NAME, API_VERSION, credentials=cred)
         print(API_SERVICE_NAME, 'service created successfully')
 
-    def make_new_folder(self, name, root=""):
-        folder_metadata = {
+
+    def create_new_folder(self, name, parent=""):
+        parent_id = None
+        if parent != "":
+            parent_id = self._get_file_id(parent, "folder")[0]["id"]
+        file_metadata = {
             "name" : name,
-            "mimeType": "application/vnd.google-apps.folder"
-            #"patents" : []
+            "mimeType": self.mime_types[type],
+            "parents" : [parent_id]
         }
-        self.service.files().create(body=folder_metadata).execute()
-    
-    def get_files(self):
-        pass
+        self.service.files().create(body=file_metadata).execute()
+
+    """ def upload_photos(self, photos, folder):
+        folder_id = self._get_file_id(folder)
+        for index, photo in enumerate(photos):
+            file_metadata = {
+                'name': f'{index+1}.jpeg',
+
+            }
+    """
+
+    def _get_file_id(self, name, type_of_file):
+        mime_type = self.mime_types[type_of_file]
+        files = self.service.files().list(corpora="user", includeItemsFromAllDrives=False, q=f"name = '{name}' and mimeType = '{mime_type}'").execute()["files"] 
+        print(files)
+        return files
+
+    def empty_trash(self):
+        self.service.files().emptyTrash().execute()
