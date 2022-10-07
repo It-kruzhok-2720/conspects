@@ -1,6 +1,7 @@
-from Google_drive import Google_drive
+from сonspects_storage import Conspects_storage
 
-gd = Google_drive()
+gd = Conspects_storage()
 
 gd.empty_trash()
-gd.create_new_folder("test")
+#gd.create_new_folder("test1")
+gd.upload_conspect("Егор Соболев", "альтушки", "07.10.2022", "photos")
