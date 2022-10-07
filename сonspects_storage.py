@@ -45,26 +45,26 @@ class Conspects_storage:
         #                          Папка конспекта
         
         #Ищем id папки предмета
-        user_folder_id = self.get_file_id(user, "folder")[0]["id"]
-        subject_folder_id = self.get_file_id(subject, "folder", user_folder_id)[0]["id"]
+        user_folder_id = self.get_file_id(user, 'folder')[0]['id']
+        subject_folder_id = self.get_file_id(subject, 'folder', user_folder_id)[0]['id']
 
         #Создаём новую папку конспекта и сохраняем её id
-        new_conspect_folder_id = self.create_new_folder(date, subject_folder_id)["id"]
+        new_conspect_folder_id = self.create_new_folder(date, subject_folder_id)['id']
         
         #Загружаем только фотографии
         files = os.listdir(files_path)
         for file in files:
             self.upload_photo(file, files_path, new_conspect_folder_id)
 
-    def create_new_folder(self, name, parent_id=""):
+    def create_new_folder(self, name, parent_id=''):
         folder_metadata = {
-            "name" : name,
-            "mimeType": self.mime_types["folder"],
+            'name' : name,
+            'mimeType': self.mime_types['folder'],
         }
         
         #Если новая папка будет находится внутри другой, мы должны указать id другой папки
-        if parent_id != "":
-            folder_metadata["parents"] = [parent_id]
+        if parent_id != '':
+            folder_metadata['parents'] = [parent_id]
         
         #Возвращаем ответ Google Drive API
         return self.service.files().create(body=folder_metadata, fields='id').execute()
@@ -84,14 +84,14 @@ class Conspects_storage:
         #Возвращаем ответ Google Drive API
         return self.service.files().create(body=file_metadata, media_body=media).execute()
 
-    def get_file_id(self, name, type_of_file, parent=""):
+    def get_file_id(self, name, type_of_file, parent=''):
         mime_type = self.mime_types[type_of_file]
         
         #Если искомый файл находится внутри папки, мы должны указать id папки
-        if parent != "": 
+        if parent != '': 
             parent = f"and '{parent}' in parents"
         
-        files = self.service.files().list(corpora="user", includeItemsFromAllDrives=False, q=f"name = '{name}' and mimeType = '{mime_type}' and trashed = false {parent}").execute()["files"] 
+        files = self.service.files().list(corpora='user', includeItemsFromAllDrives=False, q=f"name = '{name}' and mimeType = '{mime_type}' and trashed = false {parent}").execute()['files'] 
         
         #Возвращаем ответ Google Drive API
         return files
