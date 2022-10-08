@@ -16,7 +16,7 @@ class Conspects_storage:
         cred = None
 
         #Эта хуйня создаёт зашифрованный файл, в котором хранится токен
-        pickle_file = f'token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
+        pickle_file = f'tokens\\token_{API_SERVICE_NAME}_{API_VERSION}.pickle'
         # print(pickle_file)
 
         #Если у нас есть файл с токеном, то мы его открываем
