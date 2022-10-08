@@ -1,4 +1,4 @@
-from сonspects_storage import Conspects_storage
+from Conspects_storage import Conspects_storage
 
 gd = Conspects_storage()
 
