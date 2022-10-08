@@ -96,6 +96,18 @@ class Conspects_storage:
         #Возвращаем ответ Google Drive API
         return files
 
+    def get_files_id(self, type_of_files, parent=''):
+        mime_type = self.mime_types[type_of_files]
+        
+        #Если искомый файл находится внутри папки, мы должны указать id папки
+        if parent != '': 
+            parent = f"and '{parent}' in parents"
+        
+        files = self.service.files().list(corpora='user', includeItemsFromAllDrives=False, q=f"mimeType = '{mime_type}' and trashed = false {parent}").execute()['files'] 
+        
+        #Возвращаем ответ Google Drive API
+        return files
+
     def empty_trash(self):
         #Возвращаем ответ Google Drive API
         return self.service.files().emptyTrash().execute()
