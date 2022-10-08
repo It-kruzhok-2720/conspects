@@ -1,4 +1,3 @@
-from distutils import extension
 import pickle
 from settings import  CLIENT_SECRET_FILE, API_SERVICE_NAME, API_VERSION, SCOPES
 import os
